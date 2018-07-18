@@ -24,7 +24,7 @@ add_dependencies(vehicle_receiver
         ${catkin_EXPORTED_TARGETS}
         )
 
-add_executable(vehicle_sender nodes/vehicle_sender/vehicle_sender.cpp)
+add_executable(vehicle_sender nodes/vehicle_sender/vehicle_sender.cpp nodes/vehicle_sender/vehicle_street_drone.cpp)
 target_link_libraries(vehicle_sender ${catkin_LIBRARIES})
 add_dependencies(vehicle_sender
         ${catkin_EXPORTED_TARGETS}

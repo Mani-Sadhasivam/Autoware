@@ -41,36 +41,7 @@
 #include <unistd.h>
 #include <pthread.h>
 
-struct CommandData {
-  double linear_x;
-  double angular_z;
-  int modeValue;
-  int gearValue;
-  int lampValue;
-  int accellValue;
-  int brakeValue;
-  int steerValue;
-  double linear_velocity;
-  double steering_angle;
-
-  void reset();
-};
-
-void CommandData::reset()
-{
-  linear_x      = 0;
-  angular_z     = 0;
-  modeValue     = 0;
-  gearValue     = 0;
-  lampValue     = 0;
-  accellValue   = 0;
-  brakeValue    = 0;
-  steerValue    = 0;
-  linear_velocity = -1;
-  steering_angle = 0;
-}
-
-static CommandData command_data;
+#include "vehicle_sender.hpp"
 
 static void vehicleCmdCallback(const autoware_msgs::VehicleCmd& msg)
 {
@@ -101,20 +72,11 @@ static void *sendCommand(void *arg)
 {
   int *client_sockp = static_cast<int*>(arg);
   int client_sock = *client_sockp;
+  std::string cmd;
   delete client_sockp;
 
-  std::ostringstream oss;
-  oss << command_data.linear_x << ",";
-  oss << command_data.angular_z << ",";
-  oss << command_data.modeValue << ",";
-  oss << command_data.gearValue << ",";
-  oss << command_data.accellValue << ",";
-  oss << command_data.brakeValue << ",";
-  oss << command_data.steerValue << ",";
-  oss << command_data.linear_velocity << ",";
-  oss << command_data.steering_angle;
+  std::string cmd = packageCommand(command_data);
 
-  std::string cmd(oss.str());
   ssize_t n = write(client_sock, cmd.c_str(), cmd.size());
   if(n < 0){
     std::perror("write");
