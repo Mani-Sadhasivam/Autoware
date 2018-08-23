@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package>
+  <name>vehicle_abstraction</name>
+  <version>1.0.0</version>
+  <description>The vehicle abstraction package</description>
+  <maintainer email="manivannan.sadhasivam@linaro.org">Manivannan Sadhasivam</maintainer>
+  <license>BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>autoware_msgs</build_depend>
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>autoware_msgs</run_depend>
+
+  <export>
+  </export>
+
+</package>
